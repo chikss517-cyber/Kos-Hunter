@@ -50,17 +50,16 @@ model KosFacility {
 
   kos     Kos @relation(fields: [kosId], references: [id])
 }
-
 model Review {
-  id      Int    @id @default(autoincrement())
+  id      Int     @id @default(autoincrement())
   kosId   Int
   userId  Int
   comment String
+  reply   String?
 
-  kos   Kos  @relation(fields: [kosId], references: [id])
-  user  User @relation(fields: [userId], references: [id])
+  kos  Kos  @relation(fields: [kosId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
-
 model Book {
   id        Int      @id @default(autoincrement())
   kosId     Int

@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { KosService } from './kos.service';
+import { beforeEach, describe, it, expect } from '@jest/globals';
 
-describe('KosService', () => {
+void describe('KosService', () => {
   let service: KosService;
 
   beforeEach(async () => {
@@ -12,7 +13,7 @@ describe('KosService', () => {
     service = module.get<KosService>(KosService);
   });
 
-  it('should be defined', () => {
+  void it('should be defined', () => {
     expect(service).toBeDefined();
   });
 });

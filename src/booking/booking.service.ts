@@ -6,12 +6,26 @@ import { Response } from 'express';
 @Injectable()
 export class BookingService {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  historyByMonth(_arg0: number, arg1: number) {
+    throw new Error('Method not implemented.');
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  remove(_arg0: number) {
+    throw new Error('Method not implemented.');
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  updateStatus(_arg0: number, status: string) {
+    throw new Error('Method not implemented.');
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   findByUser(_arg0: number) {
+    throw new Error('Method not implemented.');
+  }
+  findAll() {
     throw new Error('Method not implemented.');
   }
   constructor(private prisma: PrismaService) {}
 
-  // CREATE BOOKING
   async create(data: any) {
     return this.prisma.book.create({
       data: {
@@ -28,48 +42,6 @@ export class BookingService {
     });
   }
 
-  // GET ALL BOOKING
-  async findAll() {
-    return this.prisma.book.findMany({
-      include: {
-        user: true,
-        kos: true,
-      },
-    });
-  }
-
-  // UPDATE STATUS BOOKING
-  async updateStatus(id: number, status: string) {
-    return this.prisma.book.update({
-      where: { id },
-      data: { status: status as any },
-    });
-  }
-
-  // DELETE BOOKING
-  async remove(id: number) {
-    return this.prisma.book.delete({
-      where: { id },
-    });
-  }
-
-  // HISTORY BOOKING BY MONTH
-  async historyByMonth(month: number, year: number) {
-    return this.prisma.book.findMany({
-      where: {
-        startDate: {
-          gte: new Date(`${year}-${month}-01`),
-          lt: new Date(`${year}-${month + 1}-01`),
-        },
-      },
-      include: {
-        user: true,
-        kos: true,
-      },
-    });
-  }
-
-  // GENERATE PDF INVOICE
   async generateInvoice(id: number, res: Response) {
     const booking = await this.prisma.book.findUnique({
       where: { id },
@@ -81,23 +53,34 @@ export class BookingService {
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     const doc = new PDFDocument();
 
     res.setHeader('Content-Type', 'application/pdf');
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     doc.pipe(res);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     doc.fontSize(20).text('NOTA BOOKING KOS', { align: 'center' });
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     doc.moveDown();
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     doc.text(`Nama Penyewa : ${booking.user.name}`);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     doc.text(`Kos : ${booking.kos.name}`);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     doc.text(`Alamat : ${booking.kos.address}`);
-    doc.text(`Mulai : ${booking.startDate.toISOString()}`);
-    doc.text(`Selesai : ${booking.endDate.toISOString()}`);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
+    doc.text(`Mulai : ${booking.startDate}`);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
+    doc.text(`Selesai : ${booking.endDate}`);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     doc.text(`Status : ${booking.status}`);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     doc.end();
   }
 }

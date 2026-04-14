@@ -1,41 +1,41 @@
 import {
-  Body,
   Controller,
-  Delete,
   Get,
-  Param,
-  Patch,
   Post,
+  Body,
+  Param,
+  Put,
+  Delete,
   Query,
 } from '@nestjs/common';
 import { KosService } from './kos.service';
 
 @Controller('kos')
 export class KosController {
-  constructor(private kosService: KosService) {}
+  constructor(private readonly kosService: KosService) {}
 
   @Post()
-  create(@Body() body: any) {
-    return this.kosService.create(body);
+  create(@Body() data: any) {
+    return this.kosService.create(data);
   }
 
   @Get()
-  findAll() {
-    return this.kosService.findAll();
+  findAll(@Query('gender') gender?: string) {
+    return this.kosService.findAll(gender);
   }
 
-  @Get('filter')
-  filter(@Query('gender') gender: string) {
-    return this.kosService.findByGender(gender);
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.kosService.findOne(Number(id));
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() body: any) {
-    return this.kosService.update(Number(id), body);
+  @Put(':id')
+  update(@Param('id') id: string, @Body() data: any) {
+    return this.kosService.update(Number(id), data);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.kosService.delete(Number(id));
+  remove(@Param('id') id: string) {
+    return this.kosService.remove(Number(id));
   }
 }

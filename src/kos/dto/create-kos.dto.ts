@@ -1,7 +1,18 @@
+import { IsString, IsInt, IsIn } from 'class-validator';
+
 export class CreateKosDto {
-  userId: number;
-  name: string;
-  address: string;
-  pricePerMonth: number;
-  gender: 'male' | 'female' | 'all';
+  @IsString()
+  name!: string;
+
+  @IsString()
+  address!: string;
+
+  @IsInt()
+  pricePerMonth!: number;
+
+  @IsIn(['male', 'female', 'mixed'])
+  gender!: 'male' | 'female' | 'mixed';
+
+  @IsInt()
+  userId!: number;
 }

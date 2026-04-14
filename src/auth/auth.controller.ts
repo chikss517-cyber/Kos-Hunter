@@ -1,19 +1,19 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  register(@Body() body: any) {
+  register(@Body() data: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    return this.authService.register(body);
+    return this.authService.register(data);
   }
 
   @Post('login')
-  login(@Body() body: any) {
+  login(@Body() data: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    return this.authService.login(body);
+    return this.authService.login(data);
   }
 }

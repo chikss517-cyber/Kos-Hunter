@@ -3,6 +3,10 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ReviewService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  findByKos(_arg0: number) {
+    throw new Error('Method not implemented.');
+  }
   constructor(private prisma: PrismaService) {}
 
   create(data: any) {

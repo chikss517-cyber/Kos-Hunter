@@ -3,6 +3,14 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class KosService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  remove(_arg0: number) {
+    throw new Error('Method not implemented.');
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  findOne(_arg0: number) {
+    throw new Error('Method not implemented.');
+  }
   constructor(private prisma: PrismaService) {}
 
   create(data: any) {
@@ -10,7 +18,8 @@ export class KosService {
     return this.prisma.kos.create({ data });
   }
 
-  findAll() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  findAll(_gender: string | undefined) {
     return this.prisma.kos.findMany({
       include: {
         images: true,

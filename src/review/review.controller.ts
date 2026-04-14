@@ -1,23 +1,23 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { ReviewService } from './review.service';
 
 @Controller('reviews')
 export class ReviewController {
-  constructor(private reviewService: ReviewService) {}
+  constructor(private readonly reviewService: ReviewService) {}
 
   @Post()
-  create(@Body() body: any) {
-    return this.reviewService.create(body);
+  create(@Body() data: any) {
+    return this.reviewService.create(data);
   }
 
   @Get(':kosId')
-  get(@Param('kosId') kosId: string) {
-    return this.reviewService.getKosReviews(Number(kosId));
+  findByKos(@Param('kosId') kosId: string) {
+    return this.reviewService.findByKos(Number(kosId));
   }
 
-  @Patch(':id/reply')
-  reply(@Param('id') id: string, @Body() body: any) {
+  @Post(':id/reply')
+  reply(@Param('id') id: string, @Body() data: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-    return this.reviewService.reply(Number(id), body.reply);
+    return this.reviewService.reply(Number(id), data.reply);
   }
 }

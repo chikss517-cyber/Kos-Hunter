@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ReviewService } from './review.service';
+import { beforeEach, describe, it, expect } from '@jest/globals';
 
-describe('ReviewService', () => {
+void describe('ReviewService', () => {
   let service: ReviewService;
 
   beforeEach(async () => {
@@ -12,7 +13,7 @@ describe('ReviewService', () => {
     service = module.get<ReviewService>(ReviewService);
   });
 
-  it('should be defined', () => {
+  void it('should be defined', () => {
     expect(service).toBeDefined();
   });
 });

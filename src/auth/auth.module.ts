@@ -3,16 +3,24 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { PrismaModule } from '../prisma/prisma.module';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './jwt.strategy';
+import { RolesGuard } from './roles.guard';
 
 @Module({
   imports: [
     PrismaModule,
     JwtModule.register({
-      secret: 'SECRET_KEY',
+      secret: process.env.JWT_SECRET || 'SECRET_KEY',
       signOptions: { expiresIn: '1d' },
     }),
   ],
+
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    JwtStrategy, // 🔐 supaya JWT guard bisa jalan
+    RolesGuard, // 🛡️ supaya role guard aktif
+  ],
+  exports: [JwtModule],
 })
 export class AuthModule {}

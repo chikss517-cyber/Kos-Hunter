@@ -66,7 +66,7 @@ model Book {
   userId    Int
   startDate DateTime
   endDate   DateTime
-  status    BookStatus
+  status    BookStatus @default(pending)
 
   kos   Kos  @relation(fields: [kosId], references: [id])
   user  User @relation(fields: [userId], references: [id])

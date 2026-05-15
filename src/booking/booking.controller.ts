@@ -12,27 +12,22 @@ import {
 } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import express from 'express';
-
-// 🔐 auth
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-
 import { BookStatus } from '@prisma/client';
 
 @Controller('booking')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
-  // ✅ SOCIETY CREATE BOOKING
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Req() req, @Body() data: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
     return this.bookingService.create(req.user.id, data);
   }
 
-  // ✅ LIHAT SEMUA (optional: batasi nanti)
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
@@ -40,7 +35,6 @@ export class BookingController {
     return this.bookingService.findAll();
   }
 
-  // ✅ OWNER APPROVE / REJECT
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('owner')
   @Put(':id/status')
@@ -57,7 +51,6 @@ export class BookingController {
     );
   }
 
-  // ✅ HISTORY
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('owner')
   @Get('history')
@@ -66,7 +59,6 @@ export class BookingController {
     return this.bookingService.historyByMonth(Number(month), Number(year));
   }
 
-  // ✅ INVOICE PDF
   @UseGuards(JwtAuthGuard)
   @Get(':id/invoice')
   generateInvoice(@Param('id') id: string, @Res() res: express.Response) {

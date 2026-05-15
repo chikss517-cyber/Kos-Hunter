@@ -9,11 +9,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { FacilityService } from './facility.service';
-
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-
 import { CreateFacilityDto } from './dto/create-facility.dto';
 import { UpdateFacilityDto } from './dto/update-facility.dto';
 
@@ -46,5 +44,9 @@ export class FacilityController {
   remove(@Param('id') id: string) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.facilityService.remove(Number(id));
+  }
+  @Get('ping')
+  ping() {
+    return 'pong';
   }
 }

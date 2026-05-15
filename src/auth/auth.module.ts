@@ -18,8 +18,8 @@ import { RolesGuard } from './roles.guard';
   controllers: [AuthController],
   providers: [
     AuthService,
-    JwtStrategy, // 🔐 supaya JWT guard bisa jalan
-    RolesGuard, // 🛡️ supaya role guard aktif
+    JwtStrategy,
+    RolesGuard, 
   ],
   exports: [JwtModule],
 })
